@@ -15,12 +15,12 @@ pub struct Screen {
 }
 
 impl Screen {
-    pub fn new(title: &String, width: u16, height: u16) -> Self {
+    pub fn new(title: &str, width: u16, height: u16) -> Self {
         let logical_size = LogicalSize::new(width, height);
         let event_loop = EventLoop::new();
         
         Self {
-            title: title.clone(),
+            title: String::from(title),
             width,
             height,
             window: WindowBuilder::new()

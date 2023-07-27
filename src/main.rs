@@ -1,6 +1,8 @@
 pub mod window_management;
 pub mod shapes;
 
+use window_management::Screen;
+
 use shapes::Shape::{Ellipse, Rectangle};
 use shapes::{EllipseBody, RectangleBody};
 
@@ -26,4 +28,7 @@ fn main() {
         radius: 10,
         color: String::from("red"),
     });
+
+    let title = String::from("hello world");
+    let test_screen = Screen::new(&title, WIDTH, HEIGHT);
 }
