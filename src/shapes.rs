@@ -32,6 +32,7 @@ pub fn colors() -> HashMap<String,[i32; 4]> {
     color_map
 }
 
+// ToDo: move this method to screen
 impl Shape {
     fn draw(&self, frame: &mut [u8]) {
         for (i, pixel) in frame.chunks_exact_mut(4).enumerate() {
