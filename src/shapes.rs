@@ -1,10 +1,23 @@
 use std::collections::HashMap;
 
+// TODO: replace enum for trait with common 'get_surface method'.
 pub enum Shape {
     Ellipse(EllipseBody),
     Rectangle(RectangleBody),
 }
 
+pub struct Color {
+    name: String,
+    rgba: [i32; 4],
+}
+impl Color {
+    pub fn new(name: &str, rgba: [i32; 4]) -> Self {
+        Self {
+            name: String::from(name),
+            rgba,
+        }
+    }
+}
 
 pub struct EllipseBody {
     pub radius: u16,
@@ -17,19 +30,19 @@ pub struct RectangleBody {
     pub color: String,
 }
 
-// Returns a hashmap with some color presets.
-pub fn colors() -> HashMap<String,[i32; 4]> {
-    let mut color_map = HashMap::new();
+// Returns some of the basic colors.
+pub fn color_presets() -> Vec<Color> {
+    let mut color_presets = Vec::new();
     
-    color_map.insert(String::from("Red"), [0xff, 0x00, 0x00, 0xff]);
-    color_map.insert(String::from("Green'"), [0x00, 0x00, 0xff, 0xff]);
-    color_map.insert(String::from("Blue'"), [0x00, 0xff, 0x00, 0xff]);
+    color_presets.push(Color::new("Red", [0xff, 0x00, 0x00, 0xff]));
+    color_presets.push(Color {name: "Green", rgba: [0x00, 0x00, 0xff, 0xff]});
+    color_presets.push(Color {name: "Blue", rgba: [0x00, 0xff, 0x00, 0xff]});
     
-    color_map.insert(String::from("Yellow'"), [0xff, 0xff, 0x00, 0xff]);
-    color_map.insert(String::from("Cyan'"), [0x00, 0xff, 0xff, 0xff]);
-    color_map.insert(String::from("Pink'"), [0xff, 0x00, 0xff, 0xff]);
+    color_presets.push(Color {name: "Yellow", rgba: [0xff, 0xff, 0x00, 0xff]});
+    color_presets.push(Color {name: "Cyan", rgba: [0x00, 0xff, 0xff, 0xff]});
+    color_presets.push(Color {name: "Pink", rgba: [0xff, 0x00, 0xff, 0xff]});
     
-    color_map
+    color_presets    
 }
 
 // ToDo: move this method to screen

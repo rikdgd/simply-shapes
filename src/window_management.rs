@@ -45,6 +45,19 @@ impl Screen {
             let y = (i / self.height as usize) as i16;
             
             let inside_shape = true; // ToDo: Calculate if the pixel should be colored.
+            
+            let rgba = if inside_shape {
+                //shape.rgba
+                [0x5e, 0x48, 0xe8, 0xff] // placeholder
+            } else {
+                [0xff, 0xff, 0xff, 0xff]
+            };
+        }
+    }
+    
+    pub fn draw_shapes(&self, shapes: Vec<Shape>, frame: &mut [u8]) {
+        for shape in shapes {
+            self.draw_shape(shape, frame);
         }
     }
     
