@@ -6,17 +6,8 @@ pub enum Shape {
     Rectangle(RectangleBody),
 }
 
-pub struct Color {
-    name: String,
-    rgba: [i32; 4],
-}
-impl Color {
-    pub fn new(name: &str, rgba: [i32; 4]) -> Self {
-        Self {
-            name: String::from(name),
-            rgba,
-        }
-    }
+pub trait ShapeTrait {
+    fn draw(&self, frame: &mut [u8]);
 }
 
 pub struct EllipseBody {
@@ -28,21 +19,6 @@ pub struct RectangleBody {
     pub width: u16,
     pub height: u16,
     pub color: String,
-}
-
-// Returns some of the basic colors.
-pub fn color_presets() -> Vec<Color> {
-    let mut color_presets = Vec::new();
-    
-    color_presets.push(Color::new("Red", [0xff, 0x00, 0x00, 0xff]));
-    color_presets.push(Color {name: "Green", rgba: [0x00, 0x00, 0xff, 0xff]});
-    color_presets.push(Color {name: "Blue", rgba: [0x00, 0xff, 0x00, 0xff]});
-    
-    color_presets.push(Color {name: "Yellow", rgba: [0xff, 0xff, 0x00, 0xff]});
-    color_presets.push(Color {name: "Cyan", rgba: [0x00, 0xff, 0xff, 0xff]});
-    color_presets.push(Color {name: "Pink", rgba: [0xff, 0x00, 0xff, 0xff]});
-    
-    color_presets    
 }
 
 // ToDo: move this method to screen
