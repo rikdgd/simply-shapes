@@ -4,7 +4,8 @@ use crate::color::Color;
 
 
 pub trait Shape {
-    fn within_surface(&self, shape_location: &Location, pixel_location: &Location) -> bool;
+    fn contains_pixel(&self, shape_location: &Location, pixel_location: &Location) -> bool;
+    fn get_color(&self) -> &Color;
 }
 
 
@@ -23,7 +24,7 @@ impl Location {
 }
 
 
-pub struct Ellipse {
+pub struct Circle {
     pub radius: u16,
     pub color: Color,
 }
@@ -36,7 +37,7 @@ pub struct Rectangle {
 }
 
 impl Shape for Rectangle {
-    fn within_surface(&self, shape_location: &Location, pixel_location: &Location) -> bool {
+    fn contains_pixel(&self, shape_location: &Location, pixel_location: &Location) -> bool {
         let shape_max_x = shape_location.x + self.width;
         let shape_max_y = shape_location.y + self.height;
 
@@ -44,6 +45,10 @@ impl Shape for Rectangle {
         let fit_y =  pixel_location.y >= shape_location.y && pixel_location.y <= shape_max_y;
 
         fit_x && fit_y
+    }
+
+    fn get_color(&self) -> &Color {
+        &self.color
     }
 }
 
@@ -55,7 +60,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn within_surface_rect() {
+    fn contains_pixel_rect() {
         let test_color = Color::new("Red", [0xff, 0x00, 0x00, 0xff]);
         let test_rect = Rectangle {
             width: 10,
@@ -69,9 +74,9 @@ mod tests {
         let location_on_edge = Location::new(30, 15);
 
 
-        assert!(test_rect.within_surface(&rect_location, &location_fits));
-        assert!(!test_rect.within_surface(&rect_location, &location_outside));
-        assert!(test_rect.within_surface(&rect_location, &location_on_edge));
+        assert!(test_rect.contains_pixel(&rect_location, &location_fits));
+        assert!(!test_rect.contains_pixel(&rect_location, &location_outside));
+        assert!(test_rect.contains_pixel(&rect_location, &location_on_edge));
     }
 }
 

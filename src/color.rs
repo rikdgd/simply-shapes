@@ -1,9 +1,9 @@
 pub struct Color {
     pub name: String,
-    pub rgba: [i32; 4],
+    pub rgba: [u8; 4],
 }
 impl Color {
-    pub fn new(name: &str, rgba: [i32; 4]) -> Self {
+    pub fn new(name: &str, rgba: [u8; 4]) -> Self {
         Self {
             name: String::from(name),
             rgba,

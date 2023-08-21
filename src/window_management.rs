@@ -34,7 +34,7 @@ impl Screen {
         }
     }
     
-    pub fn draw_shape<T>(&self, shape: &T, shape_location: &Location, frame: &mut [u8])
+    pub fn draw_shape<T>(&self, shape: &T, shape_location: Location, frame: &mut [u8])
         where 
             T: Shape
         {
@@ -45,16 +45,16 @@ impl Screen {
         };
         
         for (i, pixel) in frame.chunks_exact_mut(4).enumerate() {
-            let x = (i % self.width as usize) as i16;
-            let y = (i / self.height as usize) as i16;
-            
-            let inside_shape = true; // ToDo: Calculate if the pixel should be colored.
+            let x = (i % self.width as usize) as u16;
+            let y = (i / self.height as usize) as u16;
+            let pixel_location = Location::new(x, y);
+
+            let inside_shape = shape.contains_pixel(&shape_location, &pixel_location);
             
             let rgba = if inside_shape {
-                //shape.rgba
-                [0x5e, 0x48, 0xe8, 0xff] // placeholder
+                shape.get_color().rgba
             } else {
-                [0xff, 0xff, 0xff, 0xff]
+                [0xff, 0xff, 0xff, 0xff]    // Black
             };
             
             pixel.copy_from_slice(&rgba);

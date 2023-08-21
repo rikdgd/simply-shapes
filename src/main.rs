@@ -3,7 +3,7 @@ pub mod shapes;
 pub mod color;
 
 use window_management::Screen;
-use shapes::{Ellipse, Rectangle};
+use shapes::{Circle, Rectangle};
 use pixels::{Error, Pixels, SurfaceTexture};
 use color::Color;
 
@@ -19,8 +19,6 @@ const HEIGHT: u16 = 600;
 
 
 fn main() {
-    println!("Minecraft stack lol: {}", u16::max_value());
-    
     let test = LogicalSize::new(WIDTH as f64, HEIGHT as f64);
 
     let title = String::from("hello world");
