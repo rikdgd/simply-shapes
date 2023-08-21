@@ -13,6 +13,15 @@ pub struct Location {
     pub y: u16,
 }
 
+impl Location {
+    pub fn new(x: u16, y: u16) -> Self {
+        Self {
+            x,
+            y,
+        }
+    }
+}
+
 
 pub struct Ellipse {
     pub radius: u16,
@@ -53,24 +62,11 @@ mod tests {
             height: 10,
             color: test_color,
         };
-        let rect_location = Location {
-            x: 20,
-            y: 10,
-        };
+        let rect_location = Location::new(20, 10); 
 
-
-        let location_fits = Location {
-            x: 22,
-            y: 15,
-        };
-        let location_outside = Location {
-            x: 100,
-            y: 100,
-        };
-        let location_on_edge = Location {
-            x: 30,
-            y: 15,
-        };
+        let location_fits = Location::new(22, 15);
+        let location_outside = Location::new(100, 100); 
+        let location_on_edge = Location::new(30, 15);
 
 
         assert!(test_rect.within_surface(&rect_location, &location_fits));
