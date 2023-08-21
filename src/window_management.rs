@@ -3,7 +3,8 @@ use winit::event::{Event, VirtualKeyCode};
 use winit::event_loop::{ControlFlow, EventLoop};
 use winit::window::{WindowBuilder, Window};
 use winit_input_helper::WinitInputHelper;
-use crate::shapes::{Shape, ShapeTrait};
+use crate::shapes::Shape;
+use crate::color::Color;
 use pixels::{Pixels, SurfaceTexture};
 
 pub struct Screen {
@@ -34,7 +35,10 @@ impl Screen {
     }
     
     pub fn draw_shape<T>(&self, shape: T, frame: &mut [u8])
-        where T: ShapeTrait {
+        where 
+
+            T: Shape
+        {
         let mut pixels = {
             let window_size = self.window.inner_size();
             let surface_texture = SurfaceTexture::new(window_size.width, window_size.height, &self.window);
@@ -53,11 +57,15 @@ impl Screen {
             } else {
                 [0xff, 0xff, 0xff, 0xff]
             };
+            
+            pixel.copy_from_slice(&rgba);
         }
     }
 
-    pub fn draw_shapesss<T>(&self, shapes: Vec<T>, frame: &mut [u8]) 
-        where T: ShapeTrait {
+    pub fn draw_shapes<T>(&self, shapes: Vec<T>, frame: &mut [u8]) 
+        where 
+            T: Shape
+        {
         for shape in shapes {
             self.draw_shape(shape, frame);
         }

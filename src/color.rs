@@ -1,6 +1,6 @@
 pub struct Color {
-    name: String,
-    rgba: [i32; 4],
+    pub name: String,
+    pub rgba: [i32; 4],
 }
 impl Color {
     pub fn new(name: &str, rgba: [i32; 4]) -> Self {

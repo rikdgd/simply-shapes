@@ -1,12 +1,11 @@
 pub mod window_management;
 pub mod shapes;
+pub mod color;
 
 use window_management::Screen;
-
-use shapes::Shape::{Ellipse, Rectangle};
-use shapes::{EllipseBody, RectangleBody};
-
+use shapes::{Ellipse, Rectangle};
 use pixels::{Error, Pixels, SurfaceTexture};
+use color::Color;
 
 use winit::dpi::LogicalSize;
 use winit::event::{Event, VirtualKeyCode};
@@ -23,11 +22,6 @@ fn main() {
     println!("Minecraft stack lol: {}", u16::max_value());
     
     let test = LogicalSize::new(WIDTH as f64, HEIGHT as f64);
-    
-    let test_shape = shapes::Shape::Ellipse(EllipseBody {
-        radius: 10,
-        color: String::from("red"),
-    });
 
     let title = String::from("hello world");
     let test_screen = Screen::new(&title, WIDTH, HEIGHT);

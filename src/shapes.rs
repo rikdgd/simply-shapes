@@ -1,42 +1,30 @@
 use std::collections::HashMap;
+use crate::color::Color;
 
-// TODO: replace enum for trait with common 'get_surface method'.
-pub enum Shape {
-    Ellipse(EllipseBody),
-    Rectangle(RectangleBody),
+
+pub trait Shape {
+    fn within_surface(&self, location: Location) -> bool;
 }
 
-pub trait ShapeTrait {
-    fn draw(&self, frame: &mut [u8]);
+pub struct Location {
+    pub x: u16,
+    pub y: u16,
 }
 
-pub struct EllipseBody {
+pub struct Ellipse {
     pub radius: u16,
-    pub color: String,
+    pub color: Color,
 }
 
-pub struct RectangleBody {
+pub struct Rectangle {
     pub width: u16,
     pub height: u16,
-    pub color: String,
+    pub color: Color,
 }
 
-// ToDo: move this method to screen
-impl Shape {
-    fn draw(&self, frame: &mut [u8]) {
-        for (i, pixel) in frame.chunks_exact_mut(4).enumerate() {
-            let x = (i % 400 as usize) as i16;
-            let y = (i / 600 as usize) as i16;
-
-            let inside_the_box = true;
-
-            let rgba = if inside_the_box {
-                [0x5e, 0x48, 0xe8, 0xff]
-            } else {
-                [0x48, 0xb2, 0xe8, 0xff]
-            };
-
-            pixel.copy_from_slice(&rgba);
-        }
+impl Shape for Rectangle {
+    fn within_surface(&self, location: Location) -> bool {
+        // ToDo decide how/where the location of the shape should be stored.
+        false
     }
 }
