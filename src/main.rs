@@ -21,11 +21,11 @@ const HEIGHT: u16 = 600;
 fn main() {
     let test = LogicalSize::new(WIDTH as f64, HEIGHT as f64);
 
-    let box_location = Location::new(10, 10);
-    fn game_loop() {
+    let mut box_location = Location::new(10, 10);
+    let game_loop = || {
         box_location.move_x(1);
         box_location.move_y(1);
-    }
+    };
 
     let title = String::from("hello world");
     let test_screen = Screen::new(&title, WIDTH, HEIGHT, &game_loop);

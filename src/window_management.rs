@@ -13,11 +13,11 @@ pub struct Screen<'a>  {
     pub height: u16,
     window: Window,
     pub event_loop: EventLoop<()>,
-    main_loop: &'a dyn Fn() -> (),
+    main_loop: &'a dyn FnMut() -> (),
 }
 
 impl<'a> Screen<'a> {
-    pub fn new(title: &str, width: u16, height: u16, main_loop: &'a dyn Fn() -> ()) -> Self {
+    pub fn new(title: &str, width: u16, height: u16, main_loop: &'a dyn FnMut() -> ()) -> Self {
         let logical_size = LogicalSize::new(width, height);
         let event_loop = EventLoop::new();
         
