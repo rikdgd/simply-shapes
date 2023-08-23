@@ -21,6 +21,14 @@ impl Location {
             y,
         }
     }
+
+    pub fn move_x(&mut self, x: u16) {
+        self.x += x;
+    }
+
+    pub fn move_y(&mut self, y: u16) {
+        self.y += y;
+    }
 }
 
 
