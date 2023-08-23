@@ -7,16 +7,17 @@ use crate::shapes::{Shape, Location};
 use crate::color::Color;
 use pixels::{Pixels, SurfaceTexture};
 
-pub struct Screen {
+pub struct Screen<'a>  {
     pub title: String,
     pub width: u16,
     pub height: u16,
     window: Window,
     pub event_loop: EventLoop<()>,
+    loop_fun: &'a dyn Fn() -> (),
 }
 
-impl Screen {
-    pub fn new(title: &str, width: u16, height: u16) -> Self {
+impl<'a> Screen<'a> {
+    pub fn new(title: &str, width: u16, height: u16, loop_fun: &'a dyn Fn() -> ()) -> Self {
         let logical_size = LogicalSize::new(width, height);
         let event_loop = EventLoop::new();
         
@@ -30,7 +31,8 @@ impl Screen {
                 .with_min_inner_size(logical_size)
                 .build(&event_loop)
                 .unwrap(),
-            event_loop
+            event_loop,
+            loop_fun,
         }
     }
     
