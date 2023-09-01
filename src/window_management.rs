@@ -17,7 +17,7 @@ pub struct Screen<'a>  {
 }
 
 impl<'a> Screen<'a> {
-    pub fn new(title: &str, width: u16, height: u16, main_loop: &'a dyn FnMut() -> ()) -> Self {
+    pub fn new(title: &str, width: u16, height: u16) -> Self {
         let logical_size = LogicalSize::new(width, height);
         let event_loop = EventLoop::new();
         
@@ -32,8 +32,11 @@ impl<'a> Screen<'a> {
                 .build(&event_loop)
                 .unwrap(),
             event_loop,
-            main_loop,
         }
+    }
+
+    pub fn set_loop(&mut self, main_loop: &'a dyn FnMut() -> ()) {
+        self.main_loop = main_loop;
     }
     
     pub fn draw_shape<T>(&self, shape: &T, shape_location: Location, frame: &mut [u8])
