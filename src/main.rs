@@ -1,11 +1,13 @@
 pub mod window_management;
 pub mod shapes;
 pub mod color;
+pub mod brush;
 
 use window_management::Screen;
 use shapes::{Circle, Rectangle, Location};
 use pixels::{Error, Pixels, SurfaceTexture};
 use color::Color;
+use brush::modify_screen;
 
 use winit::dpi::LogicalSize;
 use winit::event::{Event, VirtualKeyCode};
@@ -32,7 +34,9 @@ fn main() {
     let game_loop = |screen: Screen| {
         box_location.move_x(1);
         box_location.move_y(1);
-        screen.draw_shape(&test_shape, box_location, frame); // ToDo: look at sample code for example of extracting frames.
+
+        modify_screen(screen, &test_shape, &box_location);
+        // screen.draw_shape(&test_shape, box_location, frame); // ToDo: look at sample code for example of extracting frames.
     };
 
     let test_screen = Screen::new(&title, WIDTH, HEIGHT, &game_loop);

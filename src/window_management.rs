@@ -11,7 +11,7 @@ pub struct Screen<'a>  {
     pub title: String,
     pub width: u16,
     pub height: u16,
-    window: Window,
+    pub window: Window,
     pub event_loop: EventLoop<()>,
     main_loop: &'a dyn FnMut(Screen) -> (),
 }
@@ -61,9 +61,5 @@ impl<'a> Screen<'a> {
             
             pixel.copy_from_slice(&rgba);
         }
-    }
-    
-    fn fill_color(&self, color: String) {
-        
     }
 }
