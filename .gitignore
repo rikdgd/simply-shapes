@@ -1,2 +1,7 @@
 /target
+/Cargo.lock
+
+/test-binary/target
+/test-binary/Cargo.lock
+
 /.vscode
