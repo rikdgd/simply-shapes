@@ -1,7 +1,7 @@
 pub mod window_management;
 pub mod shapes;
 pub mod color;
-pub mod brush;
+pub mod brushes;
 
 
 #[cfg(test)]
