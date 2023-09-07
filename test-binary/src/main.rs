@@ -1,8 +1,9 @@
-use window_management::Screen;
-use shapes::{Circle, Rectangle, Location};
 use pixels::{Error, Pixels, SurfaceTexture};
-use color::Color;
-use brush::modify_screen;
+
+use simply_shapes::window_management::Screen;
+use simply_shapes::shapes::{Circle, Rectangle, Location};
+use simply_shapes::color::Color;
+use simply_shapes::brush::modify_screen;
 
 use winit::dpi::LogicalSize;
 use winit::event::{Event, VirtualKeyCode};
@@ -12,7 +13,7 @@ use winit_input_helper::WinitInputHelper;
 
 
 const WIDTH: u16 = 800;
-const HEIGHT: u16 = 600; 
+const HEIGHT: u16 = 600;
 
 
 fn main() {
