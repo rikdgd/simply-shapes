@@ -1,17 +1,20 @@
-use crate::color::Color;
-use crate::shapes::Shape;
-use crate::shapes::Location;
-use crate::shapes::Rectangle;
-use crate::screen_management::Screen;
+use crate::shapes::{
+    shapes::Shape,
+    color::Color,
+    shapes::Rectangle,
+    location::Location,
+};
+use crate::screen_management::screen::Screen;
 use crate::brushes::brush::Brush;
 
+
 pub struct ShapeBrush<'a> {
-    screen: &'a Screen<'a>,
+    screen: &'a dyn Screen,
     shape: &'a dyn Shape,
 }
 
 impl<'a> ShapeBrush<'a> {
-    pub fn new(screen: &'a Screen, shape: &'a impl Shape) -> Self {
+    pub fn new(screen: &'a impl Screen, shape: &'a impl Shape) -> Self {
         Self {
             screen,
             shape,

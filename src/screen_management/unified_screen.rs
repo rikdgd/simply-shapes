@@ -22,7 +22,7 @@ impl<'a> Screen for UnifiedScreen<'a> {
     fn start(&mut self) {
         self.event_loop.run(move |event, _, control_flow| {
             // ToDo: check if redraw is requested.
-            self.main_loop(self.pixels);
+            //self.main_loop(self.pixels);
             // ToDo: request redraw
         })
     }
@@ -31,7 +31,7 @@ impl<'a> Screen for UnifiedScreen<'a> {
         println!("this screens title is: {}", self.title);
     }
 
-    fn fill(&mut self, color: &'a Color) {
+    fn fill(&mut self, color: &Color) {
         println!("filling with the given color...");
     }
 }
@@ -51,7 +51,7 @@ impl<'a> UnifiedScreen<'a> {
 
         let mut pixels = {
             let window_size = window.inner_size();
-            let surface_texture = SurfaceTexture::new(window_size.width, window_size.height, &self.window);
+            let surface_texture = SurfaceTexture::new(window_size.width, window_size.height, &window);
             Pixels::new(width as u32, height as u32, surface_texture).unwrap()
         };
 
@@ -71,7 +71,7 @@ impl<'a> UnifiedScreen<'a> {
         &self.window
     }
 
-    pub fn set_main_loop(&mut self, main_loop: dyn FnMut(Pixels) -> ()) {
+    pub fn set_main_loop(&mut self, main_loop: &'a mut dyn FnMut(&mut Pixels) -> ()) {
         self.main_loop = main_loop;
     }
     

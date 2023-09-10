@@ -1,15 +1,7 @@
-use pixels::{Error, Pixels, SurfaceTexture};
-
-use simply_shapes::window_management::Screen;
-use simply_shapes::shapes::{Circle, Rectangle, Location};
-use simply_shapes::color::Color;
-use simply_shapes::brush::modify_screen;
-
-use winit::dpi::LogicalSize;
-use winit::event::{Event, VirtualKeyCode};
-use winit::event_loop::{ControlFlow, EventLoop};
-use winit::window::WindowBuilder;
-use winit_input_helper::WinitInputHelper;
+use simply_shapes::screen_management::unified_screen::UnifiedScreen;
+use simply_shapes::shapes::shapes::{Circle, Rectangle, Location};
+use simply_shapes::shapes::color::Color;
+use simply_shapes::brushes::shape_brush;
 
 
 const WIDTH: u16 = 800;
