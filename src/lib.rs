@@ -1,6 +1,5 @@
-pub mod window_management;
+pub mod screen_management;
 pub mod shapes;
-pub mod color;
 pub mod brushes;
 
 

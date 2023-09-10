@@ -3,11 +3,11 @@ use winit::event::{Event, VirtualKeyCode};
 use winit::event_loop::{ControlFlow, EventLoop};
 use winit::window::{WindowBuilder, Window};
 use winit_input_helper::WinitInputHelper;
-use crate::shapes::{Shape, Location};
-use crate::color::Color;
 use pixels::{Pixels, SurfaceTexture};
+use crate::screen_management::screen::Screen;
+use crate::shapes::color::Color;
 
-pub struct Screen<'a>  {
+pub struct UnifiedScreen<'a>  {
     pub title: String,
     pub width: u16,
     pub height: u16,
@@ -17,7 +17,27 @@ pub struct Screen<'a>  {
     pub main_loop: &'a mut dyn FnMut(&mut Pixels) -> (),
 }
 
-impl<'a> Screen<'a> {
+
+impl<'a> Screen for UnifiedScreen<'a> {
+    fn start(&mut self) {
+        self.event_loop.run(move |event, _, control_flow| {
+            // ToDo: check if redraw is requested.
+            self.main_loop(self.pixels);
+            // ToDo: request redraw
+        })
+    }
+
+    fn stop(&mut self) {
+        println!("this screens title is: {}", self.title);
+    }
+
+    fn fill(&mut self, color: &'a Color) {
+        println!("filling with the given color...");
+    }
+}
+
+
+impl<'a> UnifiedScreen<'a> {
     pub fn new(title: &str, width: u16, height: u16, main_loop: &'a mut dyn FnMut(&mut Pixels) -> ()) -> Self {
         let logical_size = LogicalSize::new(width, height);
         let event_loop = EventLoop::new();
@@ -53,14 +73,6 @@ impl<'a> Screen<'a> {
 
     pub fn set_main_loop(&mut self, main_loop: dyn FnMut(Pixels) -> ()) {
         self.main_loop = main_loop;
-    }
-
-    pub fn start(&mut self) {
-        self.event_loop.run(move |event, _, control_flow| {
-            // ToDo: check if redraw is requested.
-            self.main_loop(self.pixels);
-            // ToDo: request redraw
-        })
     }
     
     // pub fn draw_shape<T>(&self, shape: &T, shape_location: Location, frame: &mut [u8])

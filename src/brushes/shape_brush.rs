@@ -2,7 +2,7 @@ use crate::color::Color;
 use crate::shapes::Shape;
 use crate::shapes::Location;
 use crate::shapes::Rectangle;
-use crate::window_management::Screen;
+use crate::screen_management::Screen;
 use crate::brushes::brush::Brush;
 
 pub struct ShapeBrush<'a> {
