@@ -1,4 +1,5 @@
 use simply_shapes::screen_management::unified_screen::UnifiedScreen;
+use simply_shapes::screen_management::screen::generate_loop;
 use simply_shapes::shapes::shapes::{Circle, Rectangle, Location};
 use simply_shapes::shapes::color::Color;
 use simply_shapes::brushes::shape_brush;
