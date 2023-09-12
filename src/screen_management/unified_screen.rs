@@ -13,7 +13,7 @@ pub struct UnifiedScreen<'a>  {
     pub height: u16,
     window: Window,
     pixels: Pixels,
-    event_loop: EventLoop<()>,
+    pub event_loop: EventLoop<()>,
     pub main_loop: &'a mut dyn FnMut(&mut Pixels) -> (),
 }
 
@@ -102,3 +102,15 @@ impl<'a> UnifiedScreen<'a> {
     //     }
     // }
 }
+
+
+// ToDo: macros need testing for sure, since there is no type checking.
+macro_rules! start_loop {
+    ($screen:expr) => {
+        $screen.event_loop.run(move |event, _, control_flow| {
+            // run the custom event loop.
+        });
+    }
+}
+
+pub(crate) use start_loop;
