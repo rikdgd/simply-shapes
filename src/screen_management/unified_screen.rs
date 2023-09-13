@@ -72,7 +72,7 @@ impl<'a> UnifiedScreen<'a> {
         &self.window
     }
 
-    pub fn set_main_loop(&mut self, instructions: &'a mut dyn FnMut(&mut Pixels) -> ()) {
+    pub fn set_instructions(&mut self, instructions: &'a mut dyn FnMut(&mut Pixels) -> ()) {
         self.instructions = instructions;
     }
     
