@@ -12,19 +12,20 @@ pub struct UnifiedScreen<'a>  {
     pub width: u16,
     pub height: u16,
     window: Window,
-    pixels: Pixels,
+    pub pixels: Pixels,
     pub event_loop: EventLoop<()>,
-    pub main_loop: &'a mut dyn FnMut(&mut Pixels) -> (),
+    pub instructions: &'a mut dyn FnMut(&mut Pixels) -> (),
 }
 
 
 impl<'a> Screen for UnifiedScreen<'a> {
     fn start(&mut self) {
-        self.event_loop.run(move |event, _, control_flow| {
-            // ToDo: check if redraw is requested.
-            //self.main_loop(self.pixels);
-            // ToDo: request redraw
-        })
+        // self.event_loop.run(move |event, _, control_flow| {
+        //     // ToDo: check if redraw is requested.
+        //     //self.instructions(self.pixels);
+        //     // ToDo: request redraw
+        // })
+        println!("placeholder");
     }
 
     fn stop(&mut self) {
@@ -38,7 +39,7 @@ impl<'a> Screen for UnifiedScreen<'a> {
 
 
 impl<'a> UnifiedScreen<'a> {
-    pub fn new(title: &str, width: u16, height: u16, main_loop: &'a mut dyn FnMut(&mut Pixels) -> ()) -> Self {
+    pub fn new(title: &str, width: u16, height: u16, instructions: &'a mut dyn FnMut(&mut Pixels) -> ()) -> Self {
         let logical_size = LogicalSize::new(width, height);
         let event_loop = EventLoop::new();
 
@@ -49,7 +50,7 @@ impl<'a> UnifiedScreen<'a> {
         .build(&event_loop)
         .unwrap();
 
-        let mut pixels = {
+        let pixels = {
             let window_size = window.inner_size();
             let surface_texture = SurfaceTexture::new(window_size.width, window_size.height, &window);
             Pixels::new(width as u32, height as u32, surface_texture).unwrap()
@@ -63,7 +64,7 @@ impl<'a> UnifiedScreen<'a> {
             window,
             pixels,
             event_loop,
-            main_loop,
+            instructions,
         }
     }
 
@@ -71,8 +72,8 @@ impl<'a> UnifiedScreen<'a> {
         &self.window
     }
 
-    pub fn set_main_loop(&mut self, main_loop: &'a mut dyn FnMut(&mut Pixels) -> ()) {
-        self.main_loop = main_loop;
+    pub fn set_main_loop(&mut self, instructions: &'a mut dyn FnMut(&mut Pixels) -> ()) {
+        self.instructions = instructions;
     }
     
     // pub fn draw_shape<T>(&self, shape: &T, shape_location: Location, frame: &mut [u8])
@@ -108,7 +109,19 @@ impl<'a> UnifiedScreen<'a> {
 macro_rules! start_loop {
     ($screen:expr) => {
         $screen.event_loop.run(move |event, _, control_flow| {
-            // run the custom event loop.
+            // check if a redraw is requested
+            if let Event::RedrawRequested(_) = event {
+                $screen.instructions();
+
+                if let Err(err) = $screen.pixels.render() {
+                    println!("error when rendering screen...");
+                    *control_flow = ControlFlow::Exit;
+                    return;
+                }
+                
+            }
+            
+            
         });
     }
 }
